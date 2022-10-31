@@ -60,7 +60,9 @@ class VendorController extends Controller
     try {
       $vendors = Vendor::with(['department' => function ($department) {
         $department->select('id', 'name', 'description');
-      }])->get();
+      }])
+      ->with('products')
+      ->get();
       if (!$vendors->isEmpty()) {
         return $this->returnData('data', $vendors, 'get all vendors');
       } else {
